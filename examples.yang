@@ -1,0 +1,69 @@
+module examples {
+    namespace "urn:examples";
+    prefix e;
+
+    grouping examples-group {
+        container cont {
+            leaf l {
+                type string;
+            }
+
+            leaf l-num {
+                type uint64;
+            }
+
+            leaf-list l-list-num {
+                type uint64;
+            }
+
+            leaf-list l-list-string {
+                type string;
+            }
+        }
+
+        list exlist {
+            key "name";
+
+            leaf name {
+                type string;
+            }
+
+            leaf leaf1 {
+                type uint64;
+            }
+        }
+
+        container stats {
+            config false;
+            leaf counter {
+                type uint64;
+            }
+        }
+    }
+
+    container example {
+        uses examples-group;
+    }
+
+    rpc oper {
+        input {
+            leaf arg {
+                type int64;
+            }
+        }
+
+        output {
+            leaf ret {
+                type int64;
+            }
+        }
+    }
+
+    notification notif {
+        leaf val {
+            type decimal64 {
+                fraction-digits 2;
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+#create a yang file
+subl name.yang
+
+#Install a yang file
+sysrepoctl -I name.yang --permissions=666
+
+#Import a datastore file
+subl data.xml
+sysrepocfg --import=data.xml exam1 --datastore=startup 
+
+#Checking datastore in startup
+cat /path/exam1.startup
+
+#Copy datastore from startup to running
+sysrepocfg -C -d running

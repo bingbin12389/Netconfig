@@ -1,0 +1,138 @@
+1.Environment
+OS, Opensource for YANG and NETCONF
+Ubuntu 18.04 LTS on VMware or higher version
+
+2. Install necessary tools, libraries
+
+sudo apt auto clean
+sudo apt update
+
+sudo apt install -y gcc g++ make cmake git clang vim \libpcre2-dev doxygen graphivz cmocka-doc \libcmoka-dev bison flex pkg-config devscripts \rpm debhelper valgrind expect shunit2
+
+3. Build requirement
+C compiler: gcc --version (>=7.5.0)
+cmake: cmake --version (>=3.10.2)
+pcre2-config: pcreconfig (>=10.31)
+
+[optional] Install package for development on vscode for c++, yang and netconf
+
+sudo apt install -y net-tools
+sudo apt install -y libboost-dev libboost-doc libboost-tools-dev
+sudo apt install -y openssh-server openssh-client
+sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+sudo apt install -y openjdk-8-jdk
+
+3.1 set the workspace
+cd ~
+mkdir workspace && cd workspace
+
+3.2 [optional] Install Uncrustify
+#~/workspace
+git clone https://github.com/uncrustify/uncrustify.git
+cd uncrustify; mkdir build && cd build
+
+#~/workspace/uncrustify/build
+cmake .. && make && sudo make install
+
+#check uncrustify version
+uncrustify -v
+
+3.3 Install Libyang
+
+cd ~/workspace
+#~/workspace
+git clone https://github.com/CESNET/libyang.git
+cd libyang; mkdir build && cd build
+
+#~/workspace/libyang/build
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
+make && sudo make install
+
+3.4 Install Sysrepo
+cd ~/workspace
+#~/workspace
+git clone https://github.com/sysrepo/sysrepo.git
+cd sysrepo; mkdir build && cd build
+
+#~/workspace/sysrepo/build
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
+make && sudo make install
+
+#check sysrepo install properly
+sysrepoctl --version
+
+3.5 Install Libnetconf2
+#to install Libnetconf2, LIBSSH and openssl >= v0.7.1
+#openssl
+#Install libssl (for openssl)
+sudo apt install -y libssl-dev libssl-doc
+
+#libssh(>=0.7.1)
+sudo apt install -y zlib1g-dev
+
+cd ~/workspace
+#~/workspace
+git clone http://git.libssh.org/projects/libssh.git
+cd libssh; mkdir build; cd build
+
+#~/workspace/libssh/build
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
+make && sudo make install
+
+cd ~/workspace
+#~/workspace
+git clone https://github.com/CESNET/libnetconf2.git
+cd libnetconf2; mkdir build; cd build
+
+#~/workspace/libnetconf2/build
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
+make && sudo make install
+
+3.6 Install Netopeer 2
+
+cd ~/workspace
+#~/workspace
+git clone https://github.com/CESNET/netopeer2.git
+cd libnetconf2; mkdir build; cd build
+
+#~/workspace/netopeer2/build
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
+make && sudo make install
+
+#check netopeer2 install properly
+
+netopeer2-server -h
+netopeer2-cli
+
+#start server in debug mode
+netopeer2-server -d -v3
+
+#connect ssh testing
+$ netopeer2-cli
+> connect
+Interactive SSH Authentication
+Type your password:
+Password:
+>
+Shell
+and also check the running configuration:
+
+> get-config --source running
+
+#fix error when connect ssh
+
+#edit ssh
+nano /etc/ssh/ssh_config
+#add this line to the bottom file
+GSSAPIDelegateCredentials no
+
+
+vi ~/.ssh/known_hosts 
+
+doi pass root
+passwd
+#nhappass
+#reenterpass
+
+#check ssh root 
+ssh root@127.0.0.1
