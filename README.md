@@ -32,21 +32,21 @@ On Ubuntu, become root:
 - cd NetConfServer
 
 1. Install libyang
-#git clone https://github.com/CESNET/libyang.git
-#cd libyang
-#mkdir build && cd build && cmake .. && make && make install
+- git clone https://github.com/CESNET/libyang.git
+- cd libyang
+- mkdir build && cd build && cmake .. && make && make install
 
 2. Install sysrepo
-#cd ..
-#git clone https://github.com/sysrepo/sysrepo.git
-#cd sysrepo
-#mkdir build && cd build && cmake .. && make && make install
+- cd ..
+- git clone https://github.com/sysrepo/sysrepo.git
+- cd sysrepo
+- mkdir build && cd build && cmake .. && make && make install
 
 3. Install libnetconf2
-#cd ..
-#git clone https://github.com/CESNET/libnetconf2.git
-#cd libnetconf2
-#mkdir build && cd build && cmake .. && make && make install
+- cd ..
+- git clone https://github.com/CESNET/libnetconf2.git
+- cd libnetconf2
+- mkdir build && cd build && cmake .. && make && make install
 
 4. Install Netopeer2
 - cd ..
